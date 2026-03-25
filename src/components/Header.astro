@@ -1,0 +1,107 @@
+---
+interface Props {
+  lang: 'en' | 'de';
+}
+const { lang } = Astro.props;
+
+const nav = {
+  en: [
+    { label: 'Home',     href: '/en/' },
+    { label: 'Schedule', href: '/en/schedule/' },
+    { label: 'Venue',    href: '/en/venue/' },
+    { label: 'RSVP',     href: '/en/rsvp/' },
+  ],
+  de: [
+    { label: 'Start',    href: '/de/' },
+    { label: 'Ablauf',   href: '/de/schedule/' },
+    { label: 'Ort',      href: '/de/venue/' },
+    { label: 'RSVP',     href: '/de/rsvp/' },
+  ],
+};
+
+const altLang = lang === 'en' ? 'de' : 'en';
+const altLabel = lang === 'en' ? 'DE' : 'EN';
+const altHref = lang === 'en' ? '/de/' : '/en/';
+
+const links = nav[lang];
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href={`/${lang}/`} class="site-brand">
+      <slot name="brand">&#9825;</slot>
+    </a>
+
+    <nav class="site-nav" aria-label="Main navigation">
+      {links.map(link => (
+        <a href={link.href} class="nav-link">{link.label}</a>
+      ))}
+    </nav>
+
+    <a href={altHref} class="lang-switch" aria-label={`Switch to ${altLang}`}>
+      {altLabel}
+    </a>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding-block: var(--space-sm);
+  }
+
+  .site-brand {
+    font-family: var(--font-heading);
+    font-size: var(--size-xl);
+    color: var(--color-accent);
+    margin-right: auto;
+  }
+
+  .site-nav {
+    display: flex;
+    gap: var(--space-md);
+  }
+
+  .nav-link {
+    font-family: var(--font-body);
+    font-size: var(--size-sm);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    transition: color var(--transition);
+  }
+  .nav-link:hover {
+    color: var(--color-accent);
+  }
+
+  .lang-switch {
+    font-size: var(--size-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid var(--color-border);
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-sm);
+    color: var(--color-muted);
+    transition: border-color var(--transition), color var(--transition);
+  }
+  .lang-switch:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 600px) {
+    .site-nav {
+      gap: var(--space-sm);
+    }
+  }
+</style>

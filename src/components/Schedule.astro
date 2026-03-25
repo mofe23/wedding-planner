@@ -1,0 +1,98 @@
+---
+interface Event {
+  time: string;
+  label: string;
+  description: string;
+}
+interface Props {
+  title: string;
+  subtitle: string;
+  events: Event[];
+}
+const { title, subtitle, events } = Astro.props;
+---
+
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">{title}</h2>
+    <p class="section-subtitle">{subtitle}</p>
+    <div class="divider"></div>
+
+    <ol class="timeline">
+      {events.map(event => (
+        <li class="timeline-item">
+          <span class="timeline-time">{event.time}</span>
+          <div class="timeline-dot"></div>
+          <div class="timeline-body">
+            <strong class="timeline-label">{event.label}</strong>
+            <p class="timeline-desc">{event.description}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .timeline {
+    list-style: none;
+    position: relative;
+    padding-left: 0;
+    max-width: 640px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 110px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--color-border);
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 100px 20px 1fr;
+    gap: 0 var(--space-md);
+    align-items: start;
+    margin-bottom: var(--space-lg);
+  }
+
+  .timeline-time {
+    font-family: var(--font-body);
+    font-size: var(--size-sm);
+    color: var(--color-accent);
+    letter-spacing: 0.08em;
+    padding-top: 3px;
+    text-align: right;
+  }
+
+  .timeline-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    margin-top: 5px;
+    position: relative;
+    left: 5px;
+  }
+
+  .timeline-label {
+    font-family: var(--font-heading);
+    font-size: var(--size-lg);
+    font-weight: 400;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .timeline-desc {
+    color: var(--color-muted);
+    font-size: var(--size-sm);
+  }
+
+  @media (max-width: 600px) {
+    .timeline::before { left: 80px; }
+    .timeline-item { grid-template-columns: 70px 20px 1fr; }
+  }
+</style>

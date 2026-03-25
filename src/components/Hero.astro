@@ -1,0 +1,97 @@
+---
+interface Props {
+  partner1: string;
+  partner2: string;
+  date: string;
+  intro: string;
+  hero_image?: string;
+  lang: 'en' | 'de';
+}
+const { partner1, partner2, date, intro, hero_image, lang } = Astro.props;
+const rsvpLabel = lang === 'en' ? 'RSVP' : 'RSVP';
+const rsvpHref = `/${lang}/rsvp/`;
+---
+
+<section class="hero" style={hero_image ? `background-image: url('${hero_image}')` : ''}>
+  <div class="hero-overlay">
+    <div class="container hero-content">
+      <p class="hero-names">{partner1} <span class="amp">&amp;</span> {partner2}</p>
+      <div class="divider" style="margin-inline: auto;"></div>
+      <p class="hero-date">{date}</p>
+      <p class="hero-intro">{intro}</p>
+      <a href={rsvpHref} class="hero-cta">{rsvpLabel}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    background-color: var(--color-surface);
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+  }
+
+  .hero-overlay {
+    width: 100%;
+    background: rgba(250, 248, 244, 0.80);
+    padding-block: var(--space-2xl);
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-names {
+    font-family: var(--font-heading);
+    font-size: var(--size-4xl);
+    font-weight: 400;
+    color: var(--color-text);
+    letter-spacing: 0.02em;
+  }
+
+  .amp {
+    color: var(--color-accent);
+    font-style: italic;
+  }
+
+  .hero-date {
+    font-family: var(--font-body);
+    font-size: var(--size-lg);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-bottom: var(--space-md);
+  }
+
+  .hero-intro {
+    max-width: 520px;
+    color: var(--color-muted);
+    margin-bottom: var(--space-lg);
+  }
+
+  .hero-cta {
+    display: inline-block;
+    padding: 0.75rem 2.5rem;
+    border: 1px solid var(--color-accent);
+    color: var(--color-accent);
+    font-size: var(--size-sm);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: background var(--transition), color var(--transition);
+    border-radius: var(--radius-sm);
+  }
+  .hero-cta:hover {
+    background: var(--color-accent);
+    color: var(--color-white);
+  }
+
+  @media (max-width: 600px) {
+    .hero-names { font-size: var(--size-3xl); }
+  }
+</style>

@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Rsvp from '../../components/Rsvp.astro';
+import { loadData } from '../../lib/data';
+
+const data = loadData<{
+  title: string;
+  subtitle: string;
+  intro: string;
+  google_form_url: string;
+  deadline: string;
+}>('en', 'rsvp');
+---
+
+<BaseLayout title={data.title} lang="en">
+  <Rsvp {...data} />
+</BaseLayout>

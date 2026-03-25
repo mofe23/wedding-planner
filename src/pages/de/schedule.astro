@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Schedule from '../../components/Schedule.astro';
+import { loadData } from '../../lib/data';
+
+const data = loadData<{
+  title: string;
+  subtitle: string;
+  events: { time: string; label: string; description: string }[];
+}>('de', 'schedule');
+---
+
+<BaseLayout title={data.title} lang="de">
+  <Schedule title={data.title} subtitle={data.subtitle} events={data.events} />
+</BaseLayout>

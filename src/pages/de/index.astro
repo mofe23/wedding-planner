@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import { loadData } from '../../lib/data';
+
+const home = loadData<{
+  partner1: string;
+  partner2: string;
+  date: string;
+  intro: string;
+  hero_image?: string;
+}>('de', 'home');
+
+const title = `${home.partner1} & ${home.partner2}`;
+---
+
+<BaseLayout title={title} lang="de" description={home.intro}>
+  <Hero
+    partner1={home.partner1}
+    partner2={home.partner2}
+    date={home.date}
+    intro={home.intro}
+    hero_image={home.hero_image}
+    lang="de"
+  />
+</BaseLayout>
